@@ -15,11 +15,11 @@ const Footer = () => {
                         <p className="footer-desc">
                             We provide all services related to Real Estate. {companyInfo.name} is your trusted partner for buying, selling, and property services.
                         </p>
-                        <div className="social-links">
+                        {/* <div className="social-links">
                             <a href="#" aria-label="Facebook"><Facebook size={20} /></a>
                             <a href="#" aria-label="Instagram"><Instagram size={20} /></a>
                             <a href="#" aria-label="Twitter"><Twitter size={20} /></a>
-                        </div>
+                        </div> */}
                     </div>
 
                     <div className="footer-col">

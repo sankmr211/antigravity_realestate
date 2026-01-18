@@ -56,10 +56,65 @@ To dynamically update properties on the website, we use a public Google Sheet as
 ### Step 3: Connect to the App
 1. Copy the **Sheet ID** from the URL:
    ```
-   https://docs.google.com/spreadsheets/d/YOUR_SHEET_ID_HERE/edit
+   https://docs.google.com/spreadsheets/d/{YOUR_SHEET_ID_HERE}/gviz/tq?sheet={YOUR_SHEET_TAB_NAME_HERE}
    ```
 2. Open `src/services/googleSheetsService.js`.
 3. Update the `sheetId` variable with your copied ID:
    ```javascript
    const sheetId = "YOUR_SHEET_ID_HERE";
+   sheetName = "YOUR_SHEET_TAB_NAME_HERE";
    ```
+
+## Deployment (Netlify)
+
+This project includes a `public/_redirects` file configured for Single Page Application (SPA) routing on Netlify.
+
+- **File**: `public/_redirects`
+- **Content**: `/*  /index.html  200`
+- **Purpose**: Ensures that refreshing pages like `/properties` works correctly by redirecting all requests to `index.html` (so React Router can handle them).
+
+When deploying, simply connect your repository to Netlify. The `dist` folder created by `npm run build` will automatically include this file.
+
+## Google Drive Image Hosting
+
+To **display a Google Drive image on a web page**, you must convert the normal Drive sharing link into a **direct viewable image URL**. Below are the **correct, working ways**.
+
+### Method 1: Convert Google Drive Link (Most Common)
+
+#### Step 1: Set Image Permission
+1. Right-click image in Google Drive
+2. **Get link → Anyone with the link → Viewer**
+
+#### Step 2: Copy Share Link
+Example:
+```
+https://drive.google.com/file/d/1AbCDeFGhIjKLMnoPQRstuVWxyz/view?usp=sharing
+```
+
+#### Step 3: Convert to Direct Image URL
+Extract the **FILE_ID**: `1AbCDeFGhIjKLMnoPQRstuVWxyz`
+
+Use this URL:
+```
+https://drive.google.com/uc?export=view&id=FILE_ID
+```
+*Works in HTML & React. No API key required.*
+
+### Method 2: Use Google Drive Thumbnail (Fast & Optimized)
+
+```html
+<img src="https://drive.google.com/thumbnail?id=FILE_ID&sz=w1000" alt="Drive Image" />
+```
+
+**Resize Options:**
+- 200px: `sz=w200`
+- 500px: `sz=w500`
+- Full: `sz=w1000`
+
+### ⚠️ Common Mistakes
+- ❌ Using `https://drive.google.com/file/d/FILE_ID/view` directly (won't work).
+- ❌ Image permission set to **Restricted**.
+
+### Best Practice
+- **Personal / Demo**: Use `uc?export=view`
+- **Faster Load**: Use `thumbnail`

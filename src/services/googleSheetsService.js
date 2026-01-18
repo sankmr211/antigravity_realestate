@@ -1,7 +1,12 @@
 
 export const fetchPropertiesFromSheet = async () => {
+    // Configuration: Replace with your specific Google Sheet details
     const sheetId = "1mu-73itDu06Lb20D5eZK1pLZFSDYOgyqYLeHJifMKmI";
     const sheetName = "Product";
+
+    // Google Visualization API Endpoint
+    // Format: https://docs.google.com/spreadsheets/d/{SHEET_ID}/gviz/tq?sheet={SHEET_NAME}
+    // This API allows us to fetch the sheet data as a JSON-like string without an API key.
     const url = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?sheet=${sheetName}`;
 
     try {

@@ -1,16 +1,39 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { ArrowRight, Star, Shield, Users } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import PropertyCard from '../components/features/PropertyCard';
+import SkeletonCard from '../components/common/SkeletonCard';
 import Button from '../components/common/Button';
-import { properties } from '../data/properties';
 import { companyInfo } from '../data/company';
 import { CheckCircle } from 'lucide-react';
 import './Home.css';
 
 
+import { fetchPropertiesFromSheet } from '../services/googleSheetsService';
+
 const Home = () => {
-    const featuredProperties = properties.slice(0, 3);
+    const [sheetProperties, setSheetProperties] = useState([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const loadProperties = async () => {
+            try {
+                const data = await fetchPropertiesFromSheet();
+                if (data.length > 0) {
+                    setSheetProperties(data);
+                    console.log("Sheet Data Loaded:", data);
+                }
+            } catch (error) {
+                console.error("Failed to load properties", error);
+            } finally {
+                setLoading(false);
+            }
+        };
+        loadProperties();
+    }, []);
+
+    // Display only first 3 items for Home page
+    const displayProperties = sheetProperties.slice(0, 3);
 
     return (
         <div className="home">
@@ -61,9 +84,20 @@ const Home = () => {
                         </Link>
                     </div>
                     <div className="properties-grid">
-                        {featuredProperties.map(property => (
-                            <PropertyCard key={property.id} property={property} />
-                        ))}
+                        {loading ? (
+                            // Show Skeleton loaders when data is fetching
+                            Array(3).fill(0).map((_, index) => (
+                                <SkeletonCard key={`skeleton-${index}`} />
+                            ))
+                        ) : (
+                            displayProperties.length > 0 ? (
+                                displayProperties.map(property => (
+                                    <PropertyCard key={property.id} property={property} />
+                                ))
+                            ) : (
+                                <p>No properties available at the moment.</p>
+                            )
+                        )}
                     </div>
                 </div>
             </section>

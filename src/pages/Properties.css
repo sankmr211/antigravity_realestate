@@ -1,0 +1,35 @@
+.properties-header-bg {
+    background-color: var(--color-primary);
+    color: var(--color-surface);
+    padding: 120px 0 60px;
+    /* Accounts for header height */
+    text-align: center;
+}
+
+.properties-header-bg h1 {
+    font-size: 3rem;
+    margin-bottom: 10px;
+}
+
+.properties-header-bg p {
+    font-size: 1.2rem;
+    opacity: 0.8;
+}
+
+.properties-grid-full {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 30px;
+}
+
+@media (min-width: 768px) {
+    .properties-grid-full {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 1024px) {
+    .properties-grid-full {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}

@@ -1,0 +1,40 @@
+.mobile-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 60px;
+    background-color: var(--color-surface);
+    display: flex;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+    z-index: 900;
+    /* Just below the header z-index if header were bottom, but header is top. */
+}
+
+.mobile-bar-item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    color: var(--color-text-secondary);
+    border-right: 1px solid var(--color-border);
+    transition: background-color 0.2s;
+}
+
+.mobile-bar-item:last-child {
+    border-right: none;
+}
+
+.mobile-bar-item:active {
+    background-color: #f5f5f5;
+}
+
+.mobile-bar-item.whatsapp {
+    color: #25D366;
+}
+
+.mobile-bar-item span {
+    margin-top: 4px;
+}
